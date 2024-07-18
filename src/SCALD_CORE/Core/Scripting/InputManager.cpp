@@ -3,7 +3,7 @@
 namespace SCALD_CORE {
 
    InputManager::InputManager()
-      : m_pKeyboard{ std::make_unique<SCALD_WINDOWING::Inputs::Keyboard>() }
+      : m_pKeyboard{ std::make_unique<SCALD_WINDOWING::Inputs::Keyboard>() }, m_pMouse{ std::make_unique<SCALD_WINDOWING::Inputs::Mouse>() }
    {
 
    }
@@ -140,6 +140,13 @@ namespace SCALD_CORE {
 #endif
    }
 
+   void InputManager::RegisterLuaMouseBtnNames(sol::state& lua)
+   {
+      lua.set("LEFT_BTN", SCALD_MOUSE_LEFT);
+      lua.set("MIDDLE_BTN", SCALD_MOUSE_MIDDLE);
+      lua.set("RIGHT_BTN", SCALD_MOUSE_RIGHT);
+   }
+
    InputManager& InputManager::GetInstance()
    {
       static InputManager instance{};
@@ -149,6 +156,7 @@ namespace SCALD_CORE {
    void InputManager::CreateLuaInputBindings(sol::state& lua)
    {
       RegisterLuaKeyNames(lua);
+      RegisterLuaMouseBtnNames(lua);
 
       auto& inputManager = GetInstance();
       auto& keyboard = inputManager.GetKeyboard();
@@ -159,6 +167,19 @@ namespace SCALD_CORE {
          "just_pressed", [&](int key) { return keyboard.IsKeyJustPressed(key); },
          "just_released", [&](int key) { return keyboard.IsKeyJustReleased(key); },
          "pressed", [&](int key) { return keyboard.IsKeyPressed(key); }
+      );
+
+      auto& mouse = inputManager.GetMouse();
+
+      lua.new_usertype<SCALD_WINDOWING::Inputs::Mouse>(
+         "Mouse",
+         sol::no_constructor,
+         "just_pressed", [&](int btn) { return mouse.IsBtnJustPressed(btn); },
+         "just_released", [&](int btn) { return mouse.IsBtnJustReleased(btn); },
+         "pressed", [&](int btn) { return mouse.IsBtnPressed(btn); },
+         "screen_position", [&]() { return mouse.GetMouseScreenPosition(); },
+         "wheel_x", [&]() { return mouse.GetMouseWheelX(); },
+         "wheel_y", [&]() { return mouse.GetMouseWheelY(); }
       );
    }
 

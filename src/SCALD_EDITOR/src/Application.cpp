@@ -21,6 +21,7 @@
 #include <Core/Systems/AnimationSystem.h>
 #include <Core/Scripting/InputManager.h>
 #include <Windowing/Inputs/Keyboard.h>
+#include <Windowing/Inputs/Mouse.h>
 
 namespace SCALD_EDITOR {
 
@@ -230,6 +231,7 @@ namespace SCALD_EDITOR {
    {
       auto& inputManager = SCALD_CORE::InputManager::GetInstance();
       auto& keyboard = inputManager.GetKeyboard();
+      auto& mouse = inputManager.GetMouse();
 
       // Process events
       while (SDL_PollEvent(&m_Event))
@@ -246,6 +248,19 @@ namespace SCALD_EDITOR {
             break;
          case SDL_KEYUP:
             keyboard.OnKeyReleased(m_Event.key.keysym.sym);
+            break;
+         case SDL_MOUSEBUTTONDOWN:
+            mouse.OnBtnPressed(m_Event.button.button);
+            break;
+         case SDL_MOUSEBUTTONUP:
+            mouse.OnBtnReleased(m_Event.button.button);
+            break;
+         case SDL_MOUSEWHEEL:
+            mouse.SetMouseWheelX(m_Event.wheel.x);
+            mouse.SetMouseWheelY(m_Event.wheel.y);
+            break;
+         case SDL_MOUSEMOTION:
+            mouse.SetMouseMoving(true);
             break;
          default:
             break;
@@ -286,6 +301,9 @@ namespace SCALD_EDITOR {
       auto& inputManager = SCALD_CORE::InputManager::GetInstance();
       auto& keyboard = inputManager.GetKeyboard();
       keyboard.Update();
+
+      auto& mouse = inputManager.GetMouse();
+      mouse.Update();
    }
 
    void Application::Render()
