@@ -3,15 +3,18 @@
 run_script("assets/scripts/asteroids/entityDefs.lua")
 run_script("assets/scripts/asteroids/assetDefs.lua")
 run_script("assets/scripts/asteroids/utilities.lua")
+run_script("assets/scripts/asteroids/ship.lua")
 
 LoadAssets()
 
 local entity = LoadEntity(ShipDefs["blue_ship"])
 
+gShip = Ship:Create({id = entity, initial_rotation = 90})
+
 main = {
 	[1] = {
 		update = function()
-			
+			gShip:UpdateShip()
 		end
 	},
 	[2] = {
