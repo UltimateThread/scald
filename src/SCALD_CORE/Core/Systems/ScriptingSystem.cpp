@@ -6,6 +6,7 @@
 #include "../ECS/Entity.h"
 #include <Logger/Logger.h>
 #include "../Scripting/GlmLuaBindings.h"
+#include "../Scripting/InputManager.h"
 
 namespace SCALD_CORE::Systems {
 
@@ -113,6 +114,7 @@ namespace SCALD_CORE::Systems {
    void ScriptingSystem::RegisterLuaBindings(sol::state& lua, SCALD_CORE::ECS::Registry& registry)
    {
       SCALD_CORE::Scripting::GLMBindings::CreateGLMBindings(lua);
+      SCALD_CORE::InputManager::CreateLuaInputBindings(lua);
 
       SCALD_CORE::ECS::Registry::CreateLuaRegistryBind(lua, registry);
       SCALD_CORE::ECS::Entity::CreateLuaEntityBind(lua, registry);

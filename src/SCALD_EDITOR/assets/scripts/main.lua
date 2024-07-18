@@ -82,8 +82,36 @@ main = {
 
 			transform.scale = vec2(scale, scale)
 
-			local sprite2 = gEntity:get_component(Sprite)
-			--print("Texture Name: " ..sprite2.texture_name)
+			if Keyboard.just_pressed(KEY_W) then
+				print("Key W was just pressed")
+			elseif Keyboard.just_pressed(KEY_S) then
+				print("Key S was just pressed")
+			elseif Keyboard.just_pressed(KEY_A) then
+				print("Key A was just pressed")
+			elseif Keyboard.just_pressed(KEY_D) then
+				print("Key D was just pressed")
+			end
+
+			if Keyboard.just_released(KEY_W) then
+				print("Key W was just released")
+			elseif Keyboard.just_released(KEY_S) then
+				print("Key S was just released")
+			elseif Keyboard.just_released(KEY_A) then
+				print("Key A was just released")
+			elseif Keyboard.just_released(KEY_D) then
+				print("Key D was just released")
+			end
+
+			if Keyboard.pressed(KEY_W) then
+				print("Key W was just pressed")
+			elseif Keyboard.pressed(KEY_S) then
+				print("Key S was just pressed")
+			elseif Keyboard.pressed(KEY_A) then
+				print("Key A was just pressed")
+			elseif Keyboard.pressed(KEY_D) then
+				print("Key D was just pressed")
+			end
+
 		end
 	},
 	[2] = {

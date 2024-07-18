@@ -71,11 +71,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir).\SCALD_UTILITIES\;$(SolutionDir).\Dependencies\SDL\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir).\SCALD_UTILITIES\;$(SolutionDir).\Dependencies\SDL\include;$(SolutionDir).\SCALD_LOGGER;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir).\Dependencies\SDL\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir).\SCALD_UTILITIES\;$(SolutionDir).\Dependencies\SDL\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir).\SCALD_UTILITIES\;$(SolutionDir).\Dependencies\SDL\include;$(SolutionDir).\SCALD_LOGGER;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir).\Dependencies\SDL\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -143,12 +143,20 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Windowing\Inputs\Button.h" />
+    <ClInclude Include="Windowing\Inputs\Keyboard.h" />
+    <ClInclude Include="Windowing\Inputs\Keys.h" />
     <ClInclude Include="Windowing\Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Windowing\Inputs\Button.cpp" />
+    <ClCompile Include="Windowing\Inputs\Keyboard.cpp" />
     <ClCompile Include="Windowing\Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SCALD_LOGGER\SCALD_LOGGER.vcxproj">
+      <Project>{fdb37448-1592-4b1c-b2ee-6bbba7c3c5d2}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\SCALD_UTILITIES\SCALD_UTILITIES.vcxproj">
       <Project>{c8a9d57e-2530-4cef-bc7d-fadbb9aa8770}</Project>
     </ProjectReference>

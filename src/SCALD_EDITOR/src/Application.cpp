@@ -19,6 +19,8 @@
 #include <Core/Systems/ScriptingSystem.h>
 #include <Core/Systems/RenderSystem.h>
 #include <Core/Systems/AnimationSystem.h>
+#include <Core/Scripting/InputManager.h>
+#include <Windowing/Inputs/Keyboard.h>
 
 namespace SCALD_EDITOR {
 
@@ -226,6 +228,9 @@ namespace SCALD_EDITOR {
 
    void Application::ProcessEvents()
    {
+      auto& inputManager = SCALD_CORE::InputManager::GetInstance();
+      auto& keyboard = inputManager.GetKeyboard();
+
       // Process events
       while (SDL_PollEvent(&m_Event))
       {
@@ -237,6 +242,10 @@ namespace SCALD_EDITOR {
          case SDL_KEYDOWN:
             if (m_Event.key.keysym.sym == SDLK_ESCAPE)
                m_bIsRunning = false;
+            keyboard.OnKeyPressed(m_Event.key.keysym.sym);
+            break;
+         case SDL_KEYUP:
+            keyboard.OnKeyReleased(m_Event.key.keysym.sym);
             break;
          default:
             break;
@@ -272,6 +281,11 @@ namespace SCALD_EDITOR {
       }
 
       animationSystem->Update();
+
+      // Update inputs
+      auto& inputManager = SCALD_CORE::InputManager::GetInstance();
+      auto& keyboard = inputManager.GetKeyboard();
+      keyboard.Update();
    }
 
    void Application::Render()
