@@ -4,6 +4,8 @@
 #include <string>
 #include <Rendering/Essentials/Shader.h>
 #include <Rendering/Essentials/Texture.h>
+#include "../ECS/Registry.h"
+#include <sol/sol.hpp>
 
 namespace SCALD_RESOURCES {
    class AssetManager
@@ -21,6 +23,8 @@ namespace SCALD_RESOURCES {
 
       bool AddShader(const std::string& shaderName, const std::string& vertexPath, const std::string& fragmentPath);
       SCALD_RENDERING::Shader& GetShader(const std::string& shaderName);
+
+      static void CreateLuaAssetManager(sol::state& lua, SCALD_CORE::ECS::Registry& registry);
 
    };
 

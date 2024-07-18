@@ -22,6 +22,7 @@
 #include <Core/Scripting/InputManager.h>
 #include <Windowing/Inputs/Keyboard.h>
 #include <Windowing/Inputs/Mouse.h>
+#include <Windowing/Inputs/Gamepad.h>
 
 namespace SCALD_EDITOR {
 
@@ -107,18 +108,6 @@ namespace SCALD_EDITOR {
          return false;
       }
 
-      if (!assetManager->AddTexture("castle", "./assets/textures/insurance_card2.jpeg", true))
-      {
-         SCALD_ERROR("Failed to create and add the texture");
-         return false;
-      }
-
-      if (!assetManager->AddTexture("player", "./assets/textures/Char_001.png", true))
-      {
-         SCALD_ERROR("Failed to create and add the player");
-         return false;
-      }
-
       // Create a new entity -- for test
       m_pRegistry = std::make_unique<SCALD_CORE::ECS::Registry>();
 
@@ -199,6 +188,7 @@ namespace SCALD_EDITOR {
       }
 
       SCALD_CORE::Systems::ScriptingSystem::RegisterLuaBindings(*lua, *m_pRegistry);
+      SCALD_CORE::Systems::ScriptingSystem::RegisterLuaFunctions(*lua);
 
       if (!scriptingSystem->LoadMainScript(*lua))
       {
@@ -262,6 +252,24 @@ namespace SCALD_EDITOR {
          case SDL_MOUSEMOTION:
             mouse.SetMouseMoving(true);
             break;
+         case SDL_CONTROLLERBUTTONDOWN:
+            inputManager.GamepadBtnPressed(m_Event);
+            break;
+         case SDL_CONTROLLERBUTTONUP:
+            inputManager.GamepadBtnReleased(m_Event);
+            break;
+         case SDL_CONTROLLERDEVICEADDED:
+            inputManager.AddGamepad(m_Event.jdevice.which);
+            break;
+         case SDL_CONTROLLERDEVICEREMOVED:
+            inputManager.RemoveGamepad(m_Event.jdevice.which);
+            break;
+         case SDL_JOYAXISMOTION:
+            inputManager.GamepadAxisValues(m_Event);
+            break;
+         case SDL_JOYHATMOTION:
+            inputManager.GamepadHatValues(m_Event);
+            break;
          default:
             break;
          }
@@ -304,6 +312,8 @@ namespace SCALD_EDITOR {
 
       auto& mouse = inputManager.GetMouse();
       mouse.Update();
+
+      inputManager.UpdateGamepads();
    }
 
    void Application::Render()
@@ -361,11 +371,25 @@ namespace SCALD_EDITOR {
          return;
       }
 
+      unsigned int a = SDL_GetTicks();
+      unsigned int b = SDL_GetTicks();
+      double delta = 0;
+
       while (m_bIsRunning)
       {
-         ProcessEvents();
-         Update();
-         Render();
+         a = SDL_GetTicks();
+         delta = a - b;
+
+         //if (delta > 1000 / 60.0)
+         {
+            //std::cout << "fps: " << 1000 / delta << std::endl;
+
+            b = a;
+
+            ProcessEvents();
+            Update();
+            Render();
+         }
       }
 
       CleanUp();

@@ -70,11 +70,30 @@ namespace SCALD_RESOURCES {
       if (shaderIter == m_mapShaders.end())
       {
          SCALD_ERROR("Failed to get shader [{0}] -- Does not exist!", shaderName);
-         SCALD_RENDERING::Shader shader {};
+         SCALD_RENDERING::Shader shader{};
          return shader;
       }
 
       return *shaderIter->second;
+   }
+
+   void AssetManager::CreateLuaAssetManager(sol::state& lua, SCALD_CORE::ECS::Registry& registry)
+   {
+      auto& assetManager = registry.GetContext<std::shared_ptr<AssetManager>>();
+      if (!assetManager)
+      {
+         SCALD_ERROR("Failed to bind the asset manager to lua - Does not exist in the registry!");
+         return;
+      }
+
+      lua.new_usertype<AssetManager>(
+         "AssetManager",
+         sol::no_constructor,
+         "add_texture", [&](const std::string& assetName, const std::string& filepath, bool pixelArt)
+         {
+            return assetManager->AddTexture(assetName, filepath, pixelArt);
+         }
+      );
    }
 
 }

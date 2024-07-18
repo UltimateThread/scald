@@ -8,6 +8,7 @@
 #define SCALD_LOG(x, ...) SCALD_LOGGER::Logger::GetInstance().Log(x, __VA_ARGS__);
 #define SCALD_WARN(x, ...) SCALD_LOGGER::Logger::GetInstance().Warn(x, __VA_ARGS__);
 #define SCALD_ERROR(x, ...) SCALD_LOGGER::Logger::GetInstance().Error(std::source_location::current(), x, __VA_ARGS__);
+#define SCALD_ASSERT( x ) assert( x );
 #define SCALD_INIT_LOGS(console, retain) SCALD_LOGGER::Logger::GetInstance().Init(console, retain);
 
 namespace SCALD_LOGGER {

@@ -7,6 +7,7 @@
 #include <Logger/Logger.h>
 #include "../Scripting/GlmLuaBindings.h"
 #include "../Scripting/InputManager.h"
+#include "../Resources/AssetManager.h"
 
 namespace SCALD_CORE::Systems {
 
@@ -115,6 +116,7 @@ namespace SCALD_CORE::Systems {
    {
       SCALD_CORE::Scripting::GLMBindings::CreateGLMBindings(lua);
       SCALD_CORE::InputManager::CreateLuaInputBindings(lua);
+      SCALD_RESOURCES::AssetManager::CreateLuaAssetManager(lua, registry);
 
       SCALD_CORE::ECS::Registry::CreateLuaRegistryBind(lua, registry);
       SCALD_CORE::ECS::Entity::CreateLuaEntityBind(lua, registry);
@@ -129,6 +131,26 @@ namespace SCALD_CORE::Systems {
       SCALD_CORE::ECS::Registry::RegisterMetaComponent<SCALD_CORE::ECS::TransformComponent>();
       SCALD_CORE::ECS::Registry::RegisterMetaComponent<SCALD_CORE::ECS::SpriteComponent>();
       SCALD_CORE::ECS::Registry::RegisterMetaComponent<SCALD_CORE::ECS::AnimationComponent>();
+   }
+
+   void ScriptingSystem::RegisterLuaFunctions(sol::state& lua)
+   {
+      lua.set_function(
+         "run_script", [&](const std::string& path)
+         {
+            try
+            {
+               lua.safe_script_file(path);
+            }
+            catch (const sol::error& error)
+            {
+               SCALD_ERROR("Error loading lua script: {}", error.what());
+               return false;
+            }
+
+            return true;
+         }
+      );
    }
 
 }

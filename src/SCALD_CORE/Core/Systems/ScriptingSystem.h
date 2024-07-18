@@ -18,6 +18,7 @@ namespace SCALD_CORE::Systems {
       void Render();
 
       static void RegisterLuaBindings(sol::state& lua, SCALD_CORE::ECS::Registry& registry);
+      static void RegisterLuaFunctions(sol::state& lua);
 
    };
 

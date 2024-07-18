@@ -71,11 +71,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir).\SCALD_LOGGER;$(SolutionDir).\SCALD_RENDERING;$(SolutionDir).\Dependencies\glm;$(SolutionDir).\Dependencies\entt;$(SolutionDir).\GLAD\glad\include;$(SolutionDir).\SOIL\include;$(SolutionDir).\Dependencies\lua_53\include;$(SolutionDir).\Dependencies\sol3;$(SolutionDir).\Dependencies\SDL\include;$(SolutionDir).\SCALD_WINDOW;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir).\SCALD_LOGGER;$(SolutionDir).\SCALD_RENDERING;$(SolutionDir).\Dependencies\glm;$(SolutionDir).\Dependencies\entt;$(SolutionDir).\GLAD\glad\include;$(SolutionDir).\SOIL\include;$(SolutionDir).\Dependencies\lua_53\include;$(SolutionDir).\Dependencies\sol3;$(SolutionDir).\Dependencies\SDL\include;$(SolutionDir).\SCALD_WINDOW;$(SolutionDir).\SCALD_UTILITIES;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir).\Dependencies\lua_53\lib;$(SolutionDir).\Dependencies\SDL\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir).\SCALD_LOGGER;$(SolutionDir).\SCALD_RENDERING;$(SolutionDir).\Dependencies\glm;$(SolutionDir).\Dependencies\entt;$(SolutionDir).\GLAD\glad\include;$(SolutionDir).\SOIL\include;$(SolutionDir).\Dependencies\lua_53\include;$(SolutionDir).\Dependencies\sol3;$(SolutionDir).\Dependencies\SDL\include;$(SolutionDir).\SCALD_WINDOW;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir).\SCALD_LOGGER;$(SolutionDir).\SCALD_RENDERING;$(SolutionDir).\Dependencies\glm;$(SolutionDir).\Dependencies\entt;$(SolutionDir).\GLAD\glad\include;$(SolutionDir).\SOIL\include;$(SolutionDir).\Dependencies\lua_53\include;$(SolutionDir).\Dependencies\sol3;$(SolutionDir).\Dependencies\SDL\include;$(SolutionDir).\SCALD_WINDOW;$(SolutionDir).\SCALD_UTILITIES;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir).\Dependencies\lua_53\lib;$(SolutionDir).\Dependencies\SDL\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -151,6 +151,9 @@
     </ProjectReference>
     <ProjectReference Include="..\SCALD_RENDERING\SCALD_RENDERING.vcxproj">
       <Project>{cc587167-002b-489c-9d27-008a0b375bcb}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\SCALD_UTILITIES\SCALD_UTILITIES.vcxproj">
+      <Project>{c8a9d57e-2530-4cef-bc7d-fadbb9aa8770}</Project>
     </ProjectReference>
     <ProjectReference Include="..\SCALD_WINDOW\SCALD_WINDOW.vcxproj">
       <Project>{2ecf9637-608b-4f26-8266-0f9c7fde2d7e}</Project>
